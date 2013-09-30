@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/bookticket?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123"></property>
+		<property name="maxActive" value="100"></property>
+		<property name="maxIdle" value="30"></property>
+		<property name="maxWait" value="500"></property>
+		<property name="defaultAutoCommit" value="true"></property>	
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="datasource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialet">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/bkt/bean/Admin.hbm.xml</value>
+				<value>com/bkt/bean/User.hbm.xml</value>
+				<value>com/bkt/bean/Flight.hbm.xml</value>
+				<value>com/bkt/bean/Orderlist.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 管理员 -->
+	<bean id="adminDao" class="com.bkt.dao.impl.AdminDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="adminService" class="com.bkt.service.impl.AdminServiceImpl">
+		<property name="admindao" ref="adminDao"></property>
+	</bean>
+	<bean id="adminAction" class="com.bkt.action.AdminAction" scope="prototype">
+		<property name="adminservice" ref="adminService"></property>
+		<property name="userservice" ref="userService"></property>
+		<property name="flightservice" ref="flightService"></property>
+	</bean>
+	<!-- 普通用户 -->
+	<bean id="userDao" class="com.bkt.dao.impl.UserDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<bean id="userService" class="com.bkt.service.impl.UserServiceImpl">
+		<property name="userdao" ref="userDao"></property>
+	</bean>
+	<bean id="userAction" class="com.bkt.action.UserAction" scope="prototype">
+		<property name="userservice" ref="userService"></property>
+	</bean>
+	<!-- 航班管理 -->
+	<bean id="flightDao" class="com.bkt.dao.impl.FlightDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="flightService" class="com.bkt.service.impl.FlightServiceImpl">
+		<property name="flightdao" ref="flightDao"></property>
+	</bean>
+	<bean id="flightAction" class="com.bkt.action.FlightAction" scope="prototype">
+		<property name="flightservice" ref="flightService"></property>
+	</bean>
+	<!-- 订单管理 -->
+	<bean id="orderlistDao" class="com.bkt.dao.impl.OrderlistDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="orderlistService" class="com.bkt.service.impl.OrderlistServiceImpl">
+		<property name="orderlistdao" ref="orderlistDao"></property>
+	</bean>
+	<bean id="orderlistAction" class="com.bkt.action.OrderlistAction" scope="prototype">
+		<property name="orderlistservice" ref="orderlistService"></property>
+		<property name="flightservice" ref="flightService"></property>
+	</bean>
+</beans>

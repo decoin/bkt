@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping package="com.bkt.bean">
+		<class name="Orders" table="orders">
+			<id name="orders_id" column="orders_id">
+				<generator class="identity"></generator>
+			</id>
+			<property name="orderNo" type="java.lang.String" column="orderno" not-null="true"></property>
+			<property name="total" type="java.lang.Float" column="total" not-null="true"></property>
+			<property name="orderdate" type="java.lang.String" column="orderdate"></property>
+			<many-to-one name="user" class="User" property-ref="name" column="user_name"></many-to-one>
+			</class>
+	</hibernate-mapping>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">   
+   <struts>
+   	<constant name="struts.i18n.encoding" value="utf-8" />
+   	<package name="bkt" extends="struts-default">
+   		<!--测试-->
+   		<action name="test" class="com.bkt.action.TestAction" method="userList">
+   		</action>
+   		<!-- 管理员登陆 -->
+   		<action name="adminlogin" class="adminAction" method="loginAdmin">
+   			<result>/login.jsp</result>
+   		</action>
+   		<!-- 管理员退出 -->
+   		<action name="adminlogout" class="adminAction" method="logoutAdmin">
+   			<result>/login.jsp</result>
+   		</action>
+   		<!-- 用户列表 -->
+   		<action name="userlist" class="adminAction" method="userList">
+   			<result>/bkt/index.jsp</result>
+   		</action>
+   		<!-- 删除用户 -->
+   		<action name="deleteuser" class="adminAction" method="deleteUser">
+   			<result>/bkt/index.jsp</result>
+   		</action>
+   		<!-- 发布航班 -->
+   		<action name="publishflight" class="adminAction" method="publishFlight">
+   			<result>/bkt/index.jsp</result>
+   		</action>
+   		<!-- 用户注册 -->
+   		<action name="userreg" class="userAction" method="regUser">
+   			<result>/login.jsp</result>
+   		</action>
+   		<!-- 用户登录 -->   	
+   		<action name="userlogin" class="userAction" method="loginUser">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 用户退出 -->
+   		<action name="userlogout" class="userAction" method="logoutUser">
+   			<result>/login.jsp</result>
+   		</action>
+   		<!-- 用户信息 -->
+   		<action name="usershow" class="userAction" method="queryUser">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 头像上传 -->
+   		<action name="upload" class="userAction" method="uploadPhoto">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 密码修改 -->
+   		<action name="chgpwd" class="userAction" method="changePwd">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 航班列表 -->
+   		<action name="flightlist" class="flightAction" method="flightList">
+   			<result>/login.jsp</result>
+   		</action>
+   		<!-- 航班查询 -->
+   		<action name="queryflight" class="flightAction" method="queryFlight">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 国内航班 -->
+   		<action name="showdomestic" class="flightAction" method="getDomestic">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 国际航班 -->
+   		<action name="showforeign" class="flightAction" method="getForeign">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 用户购票 -->
+   		<action name="buyticket" class="orderlistAction" method="buyTickets">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 查看订单 -->
+   		<action name="showorderlist" class="orderlistAction" method="showOrderlist">
+   			<result>/index.jsp</result>
+   		</action>
+   		<!-- 机票退订 -->
+   		<action name="refundticket" class="orderlistAction" method="refundTicket">
+   			<result>/index.jsp</result>
+   		</action>
+ 	</package>
+   	
+   </struts>

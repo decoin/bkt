@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping package="com.bkt.bean">
+		<class name="Flight" table="flights">
+			<id name="flight_id" type="java.lang.Integer" column="flight_id">
+				<generator class="identity"></generator>
+			</id>
+			<property name="flightNo" type="java.lang.String" column="flightno" not-null="true"></property>
+			<property name="startAddress" type="java.lang.String" column="startaddress" not-null="true"></property>
+			<property name="lastAddress" type="java.lang.String" column="lastaddress" not-null="true"></property>
+			<property name="starttime" type="java.lang.String" column="starttime" not-null="true"></property>
+			<property name="lasttime" type="java.lang.String" column="lasttime" not-null="true"></property>
+			<property name="dollars" type="java.lang.Float" column="dollars" not-null="true"></property>
+			<property name="number" type="java.lang.Integer" column="number" not-null="true"></property>
+			<property name="remains" type="java.lang.Integer" column="remains" not-null="true"></property>
+		</class>
+	</hibernate-mapping>
