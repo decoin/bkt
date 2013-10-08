@@ -72,21 +72,19 @@ public class FlightAction extends ActionSupport{
 		List<Flight> pageList = new ArrayList();
 		Map<String,Object> result = new HashMap<String, Object>();
 		int total = 0;
+		//获取总记录条数
+		list = this.flightservice.findAll();
+		total = list.size();
 		//定义分页并注入传递的值
 		Pagination p = new Pagination();
 		p.setCurrentPage(page);
 		p.setSize(rows);
 		//根据分页获取航班记录
 		pageList = this.flightservice.findAll(p);
-		//记录条数
-		list = this.flightservice.findAll();
-		total = list.size();
 		//通过result生成json对象
 		result.put("total", total);
 		result.put("rows", pageList);
 		JSON json = JSONObject.fromObject(result);
-		Map request = (Map)ActionContext.getContext().get("request");
-		request.put("list", list);
 		WriteData.write(json.toString());
 		return null;
 	}
@@ -142,7 +140,11 @@ public class FlightAction extends ActionSupport{
 		}
 		total = list.size();
 		//根据分页获取国内航班记录
-		pageList = list.subList((page-1)*rows, rows);
+		if(list.size()<=rows){
+			pageList = list;
+		}else{
+			pageList = list.subList((page-1)*rows, rows);
+		}
 		//生成json对象
 		result.put("total", total);
 		result.put("rows", pageList);
@@ -171,7 +173,11 @@ public class FlightAction extends ActionSupport{
 		}
 		total = list.size();
 		//获取当前页记录
-		pageList = list.subList((page-1)*rows, rows);
+		if(list.size()<=rows){
+			pageList = list;
+		}else{
+			pageList = list.subList((page-1)*rows, rows);
+		}
 		//生成json对象
 		result.put("total", total);
 		result.put("rows", pageList);

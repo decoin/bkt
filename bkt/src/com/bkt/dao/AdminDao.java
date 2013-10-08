@@ -4,5 +4,6 @@ import com.bkt.bean.Admin;
 
 public interface AdminDao {
 	public Admin queryByName(String name);
-
+	
+	public void save(Admin admin);
 }

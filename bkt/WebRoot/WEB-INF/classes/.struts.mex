@@ -22,6 +22,21 @@
         <resourceEdge source="success" routing="0" target="index.jsp" />
       </result>
     </action>
+    <action name="publishflight" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="index.jsp" />
+      </result>
+    </action>
+    <action name="removeflight" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="index.jsp" />
+      </result>
+    </action>
+    <action name="updateflight" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="index.jsp" />
+      </result>
+    </action>
     <action name="userreg" location="0,0" size="0,0">
       <result name="success">
         <resourceEdge source="success" routing="0" target="login.jsp" />

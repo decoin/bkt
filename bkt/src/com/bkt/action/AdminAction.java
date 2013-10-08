@@ -32,10 +32,17 @@ public class AdminAction extends ActionSupport{
 	private FlightService flightservice;
 	private String name;
 	private String password;
+	private String flightNo;
 	private int page;
 	private int rows;
 	private static int count = 0;
 	
+	public String getFlightNo() {
+		return flightNo;
+	}
+	public void setFlightNo(String flightNo) {
+		this.flightNo = flightNo;
+	}
 	public int getPage() {
 		return page;
 	}
@@ -178,6 +185,40 @@ public class AdminAction extends ActionSupport{
 		this.flight.setRemains(flight.getNumber());
 		this.flightservice.save(flight);
 		WriteData.write("航班发布成功!");
+		return null;
+	}
+	/** 
+	 * @Method: removeFlight 
+	 * @Description: TODO 管理员删除航班
+	 * @param @return
+	 * @return String
+	 */
+	public String removeFlight(){
+		Flight f = this.flightservice.getByflightno(flightNo);
+		this.flightservice.delete(f);
+		return null;
+	}
+	/** 
+	 * @Method: updateFlight 
+	 * @Description: TODO 管理员更新航班
+	 * @param @return
+	 * @return String
+	 */
+	public String updateFlight(){
+		this.flight.setRemains(flight.getNumber());
+		this.flightservice.update(flight);
+		WriteData.write("航班信息更新成功");
+		return null;
+	}
+	/** 
+	 * @Method: addAdmin 
+	 * @Description: TODO 添加管理员账号
+	 * @param @return
+	 * @return String
+	 */
+	public String addAdmin(){
+		this.adminservice.save(admin);
+		WriteData.write("管理员添加成功");
 		return null;
 	}
 }

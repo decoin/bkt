@@ -20,5 +20,9 @@ public class AdminDaoImpl extends HibernateDaoSupport implements AdminDao{
 		}
 		return null;
 	}
+	
+	public void save(Admin admin){
+		this.getHibernateTemplate().save(admin);
+	}
 
 }

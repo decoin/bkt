@@ -52,7 +52,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<div id="center" data-options="region:'center',fit:'true',border:'true'" style="background:#eee;">
     			<div id="tab" class="easyui-tabs" fit="true">
     				<div title="首页" href="welcome.jsp"></div>
-    				<div title="测试">我是测试</div>
     			</div>
     		</div>   
 		</div>

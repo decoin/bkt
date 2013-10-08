@@ -16,6 +16,10 @@
    		<action name="adminlogout" class="adminAction" method="logoutAdmin">
    			<result>/login.jsp</result>
    		</action>
+   		<!-- 添加管理员 -->
+   		<action name="addadmin" class="adminAction" method="addAdmin">
+   			<result>/bkt/index.jsp</result>
+   		</action>
    		<!-- 用户列表 -->
    		<action name="userlist" class="adminAction" method="userList">
    			<result>/bkt/index.jsp</result>
@@ -26,6 +30,14 @@
    		</action>
    		<!-- 发布航班 -->
    		<action name="publishflight" class="adminAction" method="publishFlight">
+   			<result>/bkt/index.jsp</result>
+   		</action>
+   		<!-- 取消航班 -->
+   		<action name="removeflight" class="adminAction" method="removeFlight">
+   			<result>/bkt/index.jsp</result>
+   		</action>
+   		<!-- 更新航班 -->
+   		<action name="updateflight" class="adminAction" method="updateFlight">
    			<result>/bkt/index.jsp</result>
    		</action>
    		<!-- 用户注册 -->

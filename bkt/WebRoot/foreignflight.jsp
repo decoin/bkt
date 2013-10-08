@@ -94,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			striped: true,
   			fitColumns:true,
   			pagination:true,
-  			height:360,
+  			height:380,
   			width:1150,
   			columns:[[
   				{field:'ck',checkbox:true,width:2},

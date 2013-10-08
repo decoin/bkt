@@ -10,8 +10,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>航班发布</title>
-    <link rel="stylesheet" type="text/css" href="css/css.css">
+    <title>航班更新</title>
+	<link rel="stylesheet" type="text/css" href="css/css.css">
     <link rel="stylesheet" type="text/css"
 			href="jquery-easyui-1.3.2/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css"
@@ -47,25 +47,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function showWindow(){
 			$('#win').window('open');
 		}
-		function publishFlight(){
-			$('#publish').form('submit',{
-				url:'publishflight!publishFlight.action',
-				onSubmit:function(){
-  	 				var isValid = $(this).form('validate');
-  	 				if(!isValid){
-  	 					$.messager.alert('提示','航班信息填写不完整','info');
-  	 				}
-  	 				return isValid;
-  	 			},
-  	 			success:function(data){
-  	 				$.messager.alert('提示',data,'info',function(){
+  		function updateFlight(){
+  			$('#update').form('submit',{
+  				url:'updateflight!updateFlight.action',
+  				success:function(data){
+					$.messager.alert('提示',data,'info',function(){
   	 					$('#win').window('close');
   	 					$('#showflight').datagrid('reload');
   	 				});
-  	 			}
-			});
-		}
-	</script>
+				}
+  			});
+  		}
+  	</script>
   </head>
   
   <body>
@@ -73,39 +66,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<table id="showflight">   
 		</table>
   	</div>
-  	<div id="win" class="easyui-window" title="发布航班" style="height: 350;width: 300;text-align: center;padding-top: 20px" 
-  		data-options="iconCls:'icon-add',modal:true,resizable:false,maximizable:false,collapsible:false,minimizable:false,closed:true">
-  		<form id="publish" method="post">
+  	<div id="win" class="easyui-window" title="更新航班" style="height: 350;width: 300;text-align: center;padding-top: 20px" 
+  		data-options="iconCls:'icon-pencil',modal:true,resizable:false,maximizable:false,collapsible:false,minimizable:false,closed:true">
+  		<form id="update" method="post">
+  			<div>
+  				<input id="fid" type="hidden" name="flight.flight_id">
+  			</div>
   			<div>
   				<label for="flightNo">航班编号:</label>
-  				<input class="easyui-validatebox" name="flight.flightNo" data-options="required:true,missingMessage:'航班号不能为空'" />
+  				<input id="fno" class="easyui-validatebox" name="flight.flightNo" data-options="required:true,missingMessage:'航班号不能为空'" />
   			</div>
   			<div>
   				<label for="startAddress">出发城市:</label>
-  				<input class="easyui-combobox" name="flight.startAddress" data-options="valueField:'text',textField:'text',url:'city_data.json'" />
+  				<input id="stc" class="easyui-combobox" name="flight.startAddress" data-options="valueField:'text',textField:'text',url:'city_data.json'" />
   			</div>
   			<div>
   				<label for="lastAddress">到达城市:</label>
-  				<input class="easyui-combobox" name="flight.lastAddress" data-options="valueField:'text',textField:'text',url:'city_data.json'" />
+  				<input id="ltc" class="easyui-combobox" name="flight.lastAddress" data-options="valueField:'text',textField:'text',url:'city_data.json'" />
   			</div>
   			<div>
   				<label for="starttime">出发时间:</label>
-  				<input class="easyui-datetimebox" name="flight.starttime" data-options="showSeconds:false" />
+  				<input id="stt" class="easyui-datetimebox" name="flight.starttime" data-options="showSeconds:false" />
   			</div>
   			<div>
   				<label for="lasttime">到达时间:</label>
-  				<input class="easyui-datetimebox" name="flight.lasttime" data-options="showSeconds:false" />
+  				<input id="ltt" class="easyui-datetimebox" name="flight.lasttime" data-options="showSeconds:false" />
   			</div>
   			<div>
   				<label for="dollars">价格:</label>
-  				<input class="easyui-validatebox" name="flight.dollars" validType="intOrFloat" />
+  				<input id="price" class="easyui-validatebox" name="flight.dollars" validType="intOrFloat" />
   			</div>
   			<div>
   				<label for="num">座数:</label>
-  				<input class="easyui-validatebox" name="flight.number" validType="integer" />
+  				<input id="num" class="easyui-validatebox" name="flight.number" validType="integer" />
   			</div>
   		</form>
-  		<div><a id="addbtn" onclick="publishFlight();" class="easyui-linkbutton">添加</a></div>
+  		<div><a id="upbtn" onclick="updateFlight();" class="easyui-linkbutton">更新</a></div>
   	</div>
   	
   	<script type="text/javascript">
@@ -114,11 +110,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			title:'航班列表',
   			method:'post',
   			striped: true,
+  			singleSelect:true,
   			fitColumns:true,
   			pagination:true,
   			height:400,
   			width:1150,
   			columns:[[
+  				{field:'ck',checkbox:true,width:2},
+  				{field:'flight_id',title:'ID',hidden:true},
   				{field:'flightNo',title:'航班编号',width:80,sortable:true},
   				{field:'startAddress',title:'起飞城市',width:80},
   				{field:'lastAddress',title:'到达城市',width:80},
@@ -129,13 +128,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				{field:'remains',title:'余票',width:60,align:'right'},
   			]],
   			toolbar:[{
-  				text:'发布航班',
-  				iconCls:'icon-add',
+  				text:'更新航班',
+  				iconCls:'icon-edit',
   				handler:function(){
-  					showWindow();
+  					getSelect();
   				}
-  			}]
+  			}],
+  			onLoadSuccess:function(){
+  				$('#showflight').datagrid('clearSelections');
+  			}
   		});
+  	</script>
+  	<script type="text/javascript">
+  		function getSelect(){
+  			var row = $('#showflight').datagrid('getSelected');
+  			document.getElementById('fid').value=row.flight_id;
+  			document.getElementById('fno').value=row.flightNo;
+  			document.getElementById('price').value=row.dollars;
+  			document.getElementById('num').value=row.number;
+  			$('#stc').combobox('setValue',row.startAddress);
+  			$('#ltc').combobox('setValue',row.lastAddress);
+  			$('#stt').datetimebox('setValue',row.starttime);
+  			$('#ltt').datetimebox('setValue',row.lasttime);
+  			showWindow();
+  		}
   	</script>
   </body>
 </html>

@@ -82,6 +82,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						closable:true
 					});
     			}
+    			if(node.text == "取消航班"){
+    				$("#tab").tabs('add',{
+						title:node.text,
+						content:'<iframe id="rff" style=width:100%;height:100%; src=http://localhost:8080/bkt/admin/removeflight.jsp frameborder=0></iframe>',
+						closable:true
+					});
+    			}
+    			if(node.text == "更新航班"){
+    				$("#tab").tabs('add',{
+						title:node.text,
+						content:'<iframe id="uff" style=width:100%;height:100%; src=http://localhost:8080/bkt/admin/updateflight.jsp frameborder=0></iframe>',
+						closable:true
+					});
+    			}
+    			if(node.text == "增加管理员"){
+    				$("#tab").tabs('add',{
+						title:node.text,
+						content:'<iframe id="adf" style=width:100%;height:100%; src=http://localhost:8080/bkt/admin/addadmin.jsp frameborder=0></iframe>',
+						closable:true
+					});
+    			}
 			}
     	});
     </script>

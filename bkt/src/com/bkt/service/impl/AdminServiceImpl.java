@@ -21,5 +21,8 @@ public class AdminServiceImpl implements AdminService{
 	public Admin queryByName(String name) {
 		return this.admindao.queryByName(name);
 	}
-
+	
+	public void save(Admin admin){
+		this.admindao.save(admin);
+	}
 }
